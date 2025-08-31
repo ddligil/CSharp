@@ -1,9 +1,7 @@
 //string C#’ta referans tipi olmasına rağmen immutable (değiştirilemez).
 //Yani sen şu işlemi yaptığında:
-
 string s = "Hello";
 s += " World";
-
 //İlk önce "Hello" diye bir string nesnesi heap’te oluşur.
 //s += " World" yaptığında "Hello World" diye yeni bir string nesnesi oluşturulur.
 // string immutable olduğu için her "+" veya Replace() işlemiyle yeni bir nesne oluşur ve bu belleği tüketir. Özellikle döngülerde çok fazla yeni nesne oluşması uygulamayı yavaşlatabilir.
@@ -88,7 +86,7 @@ var a;
 a = 9; #çalısmaz
 
 #Ayrıca metot parametrelerinde var kullanılmaz 
-void Display(var param)  //  Geçersiz
+void Display(var param)  // ❌ Geçersiz
 {
     Console.WriteLine(param);
 }
@@ -97,3 +95,33 @@ void Display(var param)  //  Geçersiz
 Class:reference type (heap’te tutulur). Nesne kopyalanınca referans kopyalanır.
 Struct:value type (stack’te tutulur). Nesne kopyalanınca verinin kendisi kopyalanır
 
+
+// Partial Class Nedir?
+// Normalde bir class tek bir .cs dosyasında tanımlanır. Ama partial anahtar kelimesi kullanırsan, aynı class’ı birden fazla dosyaya bölerek yazabilirsin.Derleyici derleme aşamasında bu parçaları birleştirir ve sanki tek bir class yazmışsın gibi davranır.
+
+
+//EmployeeProps.cs
+public partial class Employee
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+}
+
+//EmployeeMethods.cs
+public partial class Employee
+{
+    public void Display()
+    {
+        Console.WriteLine($"Id: {Id}, Name: {Name}");
+    }
+}
+
+//Mainde
+class Program
+{
+    static void Main()
+    {
+        Employee emp = new Employee { Id = 1, Name = "Kerem" };
+        emp.Display(); 
+    }
+}
