@@ -1,3 +1,11 @@
+//string C#’ta referans tipi olmasına rağmen immutable (değiştirilemez).
+//Yani sen şu işlemi yaptığında:
+
+string s = "Hello";
+s += " World";
+
+//İlk önce "Hello" diye bir string nesnesi heap’te oluşur.
+//s += " World" yaptığında "Hello World" diye yeni bir string nesnesi oluşturulur.
 // string immutable olduğu için her "+" veya Replace() işlemiyle yeni bir nesne oluşur ve bu belleği tüketir. Özellikle döngülerde çok fazla yeni nesne oluşması uygulamayı yavaşlatabilir.
 // StringBuilder, tek bir nesne üzerinde değişiklik yaparak bu sorunu çözer. Bellekte tek nesne, içindeki char dizisini genişleterek işler
 //Oluşturması şu şekildedir:
@@ -8,8 +16,8 @@ var sb1 = new StringBuilder();                // Boş
 var sb2 = new StringBuilder("Hello");         // Başlangıç metni
 var sb3 = new StringBuilder("Hi", capacity:50);// Belirlenen kapasite
 
-sb.Append("World!");
-sb.Insert(5, " C#");
+sb1.Append("World!");
+sb2.Insert(5, " C#");
 // sb içindeki değeri değiştirmiş olduk, yeni nesne oluşmadı.
 // StringBuilder ile yapılan değişiklikleri string tipine çevirmek için ToString() kullanılır.
 
@@ -73,12 +81,14 @@ class Student
     }
 }
 
+
+
 //var ile önce tanımlayıp sonra değer atayamazsın çünkü C# derleyicisi tipini o ilk değerden çıkarmak zorunda:
 var a;
 a = 9; #çalısmaz
 
 #Ayrıca metot parametrelerinde var kullanılmaz 
-void Display(var param)  //Geçersiz
+void Display(var param)  //  Geçersiz
 {
     Console.WriteLine(param);
 }
