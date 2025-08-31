@@ -125,3 +125,22 @@ class Program
         emp.Display(); 
     }
 }
+
+
+//Statik bir sınıf:Nesne oluşturulamaz.
+//İçindeki tüm üyeler (alanlar, metotlar vb.) statik olmalıdır.
+//Örnek üye veya yapıcı içeremez.Miras alınamaz; zincirleme kalıtım yapılamaz.
+//Bellekte uygulama boyu boyunca kalır (uygulama domain’i boyunca) Örnek:
+public static class Calculator
+{
+    private static int _resultStorage = 0;
+    public static string Type = "Arithmetic";
+    public static int Sum(int num1, int num2)
+    {
+        return num1 + num2;
+    }
+    public static void Store(int result)
+    {
+        _resultStorage = result;
+    }
+}
