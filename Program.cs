@@ -237,3 +237,21 @@ class Calculator<T> where T : struct
     public T Number { get; set; }
 }
 //struct constraint → sadece value type (int, double, bool vb.) kabul eder.string veya class verirsen hata olur.
+
+
+//C#ta 2 tür collection vardır:
+//1-Generic Collections:Sadece belirli bir tip tutar.Örn:  
+List<int> sayilar = new List<int>();
+sayilar.Add(10);
+List<string> isimler = new List<string>();
+isimler.Add("Ali");
+//Dictionary: 
+Dictionary<int, string> plakalar = new Dictionary<int, string>();
+plakalar.Add(41, "Kocaeli");
+
+//2-Non-Generic Collections:Farklı tipleri aynı listede saklayabilir.
+//1-: ArrayList 
+var arlist2 = new ArrayList()
+                {
+                    2, "Steve", " ", true, 4.5, null
+                };
