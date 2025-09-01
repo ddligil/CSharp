@@ -144,3 +144,13 @@ public static class Calculator
         _resultStorage = result;
     }
 }
+
+
+//Jagged Array :(düzensiz dizi) = dizilerin dizisi demektir.Normal çok boyutlu diziden farkı: Her satır farklı uzunlukta olabilir.Örnek:
+
+int[][] jagged = new int[3][];
+jagged[0] = new int[] { 1, 2 }; //satır → 2 elemanlı
+jagged[1] = new int[] { 3, 4, 5, 6 }; //satır → 4 elemanlı
+jagged[2] = new int[] { 7, 8, 9 }; //satır → 3 elemanlı
+
+
