@@ -217,3 +217,23 @@ Print<int>(100);      // T = int
 Print<string>("Hi");  // T = string
 Print(3.14);          // T = double (otomatik algılar)
 
+
+//Generic Constraints:
+//Generics ile T her türlü tip olabilir ama bazen T için sınırlama koymak isteyebilirsin.
+//o zaman constraint kullanılır. where anahtar kelimesiyle kullanılır.
+//Yani “Bu generic sadece şu türlerle çalışabilir” demek.
+
+//Örnek 1 – Referans tip kısıtı
+
+class DataStore<T> where T : class
+{
+    public T Data { get; set; }
+}
+//Burada T sadece referans tip (class, string, List<int> vb.) olabilir.Eğer int gibi değer tipi verirsen hata alırsın.
+// Örnek 2 – Değer tip kısıtı
+
+class Calculator<T> where T : struct
+{
+    public T Number { get; set; }
+}
+//struct constraint → sadece value type (int, double, bool vb.) kabul eder.string veya class verirsen hata olur.
