@@ -154,3 +154,31 @@ jagged[1] = new int[] { 3, 4, 5, 6 }; //satır → 4 elemanlı
 jagged[2] = new int[] { 7, 8, 9 }; //satır → 3 elemanlı
 
 
+//Indexer:bir sınıfın ya da struct’ın içinde tanımlanır ve o sınıfın nesnelerine dizi gibi [] ile erişmeyi sağlar.
+
+class MyCollection
+{
+    private string[] data = new string[3];
+
+    // Indexer tanımı
+    public string this[int index]
+    {
+        get { return data[index]; }   // okuma
+        set { data[index] = value; }  // yazma
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        MyCollection c = new MyCollection();
+
+        c[0] = "Hello";       // aslında data[0] = "Hello"
+        c[1] = "World";       // aslında data[1] = "World"
+
+        Console.WriteLine(c[0]); // Hello
+        Console.WriteLine(c[1]); // World
+    }
+}
+
