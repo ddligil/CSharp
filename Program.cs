@@ -182,3 +182,38 @@ class Program
     }
 }
 
+
+//Generics Nedir?
+//C#’ta generic tip bağımsız kod yazmaya yarar.Yani aynı sınıfı ya da metodu hem int hem string hem de başka türlerle kullanabilirsin.
+//Bunu yaparken bir tip parametresi kullanılır → genelde T harfiyle gösterilir.Type (tip) 
+//Yani T bir türün yer tutucusudur. Sen kullanırken T yerine int, string, double vs koyarsın.Örnek:
+
+class DataStore
+{
+    public int Data { get; set; }
+}
+//Bu sınıf sadece int için çalışır.
+//Eğer string saklamak isteseydin, ikinci bir sınıf yazman gerekirdi.
+//Generic ile
+
+class DataStore<T>
+{
+    public T Data { get; set; }
+}
+
+var intStore = new DataStore<int>();
+intStore.Data = 42;       // T burada int oldu
+
+var stringStore = new DataStore<string>();
+stringStore.Data = "Merhaba"; // T burada string oldu
+
+//Generic Metot:Aynı mantık metotlarda da var:
+public static void Print<T>(T value)
+{
+    Console.WriteLine(value);
+}
+Kullanım:
+Print<int>(100);      // T = int
+Print<string>("Hi");  // T = string
+Print(3.14);          // T = double (otomatik algılar)
+
