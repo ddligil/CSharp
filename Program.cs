@@ -245,9 +245,36 @@ List<int> sayilar = new List<int>();
 sayilar.Add(10);
 List<string> isimler = new List<string>();
 isimler.Add("Ali");
+
 //Dictionary: 
 Dictionary<int, string> plakalar = new Dictionary<int, string>();
 plakalar.Add(41, "Kocaeli");
+
+//HashSet<T> :Tekrarsız (unique) elemanları saklar.Kümeler (matematikteki set) gibidir.
+HashSet<int> set = new HashSet<int> { 1, 2, 2, 3 };
+Console.WriteLine(set.Count); // 3 (tekrar yok)
+
+//Queue<T>:FIFO mantığı,ilk giren ilk çıkar. tip güvenli.
+Queue<string> q = new Queue<string>();
+q.Enqueue("Ali");
+q.Enqueue("Veli");
+Console.WriteLine(q.Dequeue()); // Ali
+
+Stack<T>:LIFO mantığı,son giren ilk çıkar tip güvenli.
+Stack<string> s = new Stack<string>();
+s.Push("ilk");
+s.Push("son");
+Console.WriteLine(s.Pop()); // son
+
+//LinkedList<T>:Çift yönlü bağlı listedir.Ortadan ekleme/çıkarma hızlıdır.
+LinkedList<string> ll = new LinkedList<string>();
+ll.AddLast("A");
+ll.AddLast("B");
+ll.AddFirst("C"); // Baştan ekleme
+
+//SortedSet<T>:HashSet gibi tekrarsız eleman tutar, ayrıca sıralıdır.
+SortedSet<int> ss = new SortedSet<int>() { 3, 1, 2, 2 };
+foreach (var i in ss) Console.WriteLine(i); // 1,2,3
 
 //2-Non-Generic Collections:Farklı tipleri aynı listede saklayabilir.
 //1-: ArrayList 
@@ -255,3 +282,9 @@ var arlist2 = new ArrayList()
                 {
                     2, "Steve", " ", true, 4.5, null
                 };
+
+//Hashtable:Key–Value (anahtar-değer) yapısıdır.Key benzersizdir.
+Hashtable ht = new Hashtable();
+ht.Add(1, "Ali");
+ht.Add("id", 42);
+//kalanlar da benzer çalışır
