@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic; // List<T> için gerekli
+using System.Collections.Generic; 
 
 
 
@@ -154,6 +154,14 @@ class Program {
                         Console.Write("Hangi görevi güncellemek istiyorsun (numara gir): ");
                         int secilenIndex = int.Parse(Console.ReadLine());
                         int index = secilenIndex - 1;
+
+
+
+
+
+
+
+                    
                         if (index >= 0 && index < gorevListesi.Count)
                         {
                             gorevListesi[index].Guncelle();
