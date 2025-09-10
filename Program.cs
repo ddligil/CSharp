@@ -288,3 +288,16 @@ Hashtable ht = new Hashtable();
 ht.Add(1, "Ali");
 ht.Add("id", 42);
 //kalanlar da benzer çalışır
+
+
+
+//| Kategori           | Önerilen Standart                                    |
+//| ------------------ | ---------------------------------------------------- |
+//| Sınıf/Metot Adları | PascalCasing (`ClientActivity`)                      |
+//| Yerel Değişkenler  | camelCasing (`itemCount`)                            |
+//| Identifiers        | Tip göstergesi yok (`counter`, `name`)               |
+//| Sabitler           | Normal case (`ShippingType`), all caps kaçar         |
+//| Kısaltmalar        | Kaçınılmalı; yaygın şekilde izinli                   |
+//| Alt Çizgi          | `private static _member` dışında kaçınılmalı         |
+//| Interface          | `I` ile başla (`IShape`)                             |
+
