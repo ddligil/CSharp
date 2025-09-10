@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic; 
-
-
+using System.Collections.Generic;
 
 class Menu
 {
@@ -24,75 +22,67 @@ class Menu
 
 class Tasks
 {
-    public string gorevBaslık = "";
-    public string gorevAcıklama = "";
-    public int gorevDurum;
-    public int gorevOncelik;
-    public string gorevBaslangic = "";
-    public string gorevBitis = "";
-
+    public string GorevBaslik = "";
+    public string GorevAciklama = "";
+    public int GorevDurum;
+    public int GorevOncelik;
+    public string GorevBaslangic = "";
+    public string GorevBitis = "";
 
     public void TaskOlustur()
     {
         Console.Write("Görev Başlığı: ");
-        gorevBaslık = Console.ReadLine();
+        GorevBaslik = Console.ReadLine();
 
         Console.Write("Görev Açıklaması: ");
-        gorevAcıklama = Console.ReadLine();
+        GorevAciklama = Console.ReadLine();
 
         Console.Write("Durum seç (1=Todo, 2=Inprogress, 3=Done): ");
-        gorevDurum = int.Parse(Console.ReadLine());
+        GorevDurum = int.Parse(Console.ReadLine());
 
         Console.Write("Öncelik seç (1=Low, 2=Medium, 3=High): ");
-        gorevOncelik = int.Parse(Console.ReadLine());
+        GorevOncelik = int.Parse(Console.ReadLine());
 
-        gorevBaslangic = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+        GorevBaslangic = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
 
         Console.Write("Bitiş tarihi (gg.aa.yyyy): ");
-        gorevBitis = Console.ReadLine();
-
+        GorevBitis = Console.ReadLine();
     }
 
     public void Guncelle()
     {
-        Console.Write($"Yeni Başlık (eski: {gorevBaslık}): ");
+        Console.Write($"Yeni Başlık (eski: {GorevBaslik}): ");
         string yeniBaslik = Console.ReadLine();
         if (!string.IsNullOrWhiteSpace(yeniBaslik))
-            gorevBaslık = yeniBaslik;   
+            GorevBaslik = yeniBaslik;
 
+        Console.Write($"Yeni Açıklama (eski: {GorevAciklama}): ");
+        string yeniAciklama = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(yeniAciklama))
+            GorevAciklama = yeniAciklama;
 
+        Console.Write($"Yeni Durum (1=Todo, 2=Inprogress, 3=Done, eski: {GorevDurum}): ");
+        string durumSecimi = Console.ReadLine();
+        if (durumSecimi == "1" || durumSecimi == "2" || durumSecimi == "3")
+            GorevDurum = int.Parse(durumSecimi);
 
-        Console.Write($"Yeni Açıklama (eski: {gorevAcıklama}): "); 
-    string yeniAciklama = Console.ReadLine();                 
-    if (!string.IsNullOrWhiteSpace(yeniAciklama))             
-        gorevAcıklama = yeniAciklama;                        
+        Console.Write($"Yeni Öncelik (1=Low, 2=Medium, 3=High, eski: {GorevOncelik}): ");
+        string oncelikSecimi = Console.ReadLine();
+        if (oncelikSecimi == "1" || oncelikSecimi == "2" || oncelikSecimi == "3")
+            GorevOncelik = int.Parse(oncelikSecimi);
 
-   
-    Console.Write($"Yeni Durum (1=Todo, 2=Inprogress, 3=Done, eski: {gorevDurum}): ");
-    string d = Console.ReadLine();                            
-    if (d == "1" || d == "2" || d == "3")                     
-        gorevDurum = int.Parse(d);                           
+        Console.Write($"Yeni Bitiş Tarihi (eski: {GorevBitis}): ");
+        string yeniBitis = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(yeniBitis))
+            GorevBitis = yeniBitis;
 
- 
-    Console.Write($"Yeni Öncelik (1=Low, 2=Medium, 3=High, eski: {gorevOncelik}): ");
-    string o = Console.ReadLine();                             
-    if (o == "1" || o == "2" || o == "3")                      
-        gorevOncelik = int.Parse(o);                           
-
-  
-    Console.Write($"Yeni Bitiş Tarihi (eski: {gorevBitis}): ");
-    string yeniBitis = Console.ReadLine();                     
-    if (!string.IsNullOrWhiteSpace(yeniBitis))                 
-        gorevBitis = yeniBitis;                               
-
-    Console.WriteLine("\nGörev güncellendi!");    
+        Console.WriteLine("\nGörev güncellendi!");
     }
-
-
 }
 
-class Program {
-        static List<Tasks> gorevListesi = new List<Tasks>();
+class Program
+{
+    static List<Tasks> _gorevListesi = new List<Tasks>();
 
     static void Main(string[] args)
     {
@@ -102,69 +92,56 @@ class Program {
             Console.Write("Seçim yap: ");
             string secim = Console.ReadLine();
 
-
-
             switch (secim)
             {
                 case "1":
-                    var yeni = new Tasks();
-                    yeni.TaskOlustur();
-                    gorevListesi.Add(yeni);
+                    var yeniGorev = new Tasks();
+                    yeniGorev.TaskOlustur();
+                    _gorevListesi.Add(yeniGorev);
                     Console.WriteLine("Görev eklendi!");
                     Pause();
                     break;
 
-
-
-
-                       case "2":
-                    if (gorevListesi.Count == 0) 
+                case "2":
+                    if (_gorevListesi.Count == 0)
                     {
                         Console.WriteLine("Hiç görev yok.");
                     }
-
                     else
                     {
-                        foreach (var g in gorevListesi)
+                        foreach (var gorev in _gorevListesi)
                         {
                             Console.WriteLine(
-                                $"Başlık: {g.gorevBaslık}, " +
-                                $"Açıklama: {g.gorevAcıklama}, " +
-                                $"Durum: {g.gorevDurum}, " +
-                                $"Öncelik: {g.gorevOncelik}, " +
-                                $"Başlangıç: {g.gorevBaslangic}, " +
-                                $"Bitiş: {g.gorevBitis}"
+                                $"Başlık: {gorev.GorevBaslik}, " +
+                                $"Açıklama: {gorev.GorevAciklama}, " +
+                                $"Durum: {gorev.GorevDurum}, " +
+                                $"Öncelik: {gorev.GorevOncelik}, " +
+                                $"Başlangıç: {gorev.GorevBaslangic}, " +
+                                $"Bitiş: {gorev.GorevBitis}"
                             );
                         }
                     }
                     Pause();
                     break;
 
-                case"3":
-                    if (gorevListesi.Count == 0)
+                case "3":
+                    if (_gorevListesi.Count == 0)
                     {
                         Console.WriteLine("guncellenecek hiç gorev yok");
                     }
                     else
                     {
-                        for (int i = 0; i < gorevListesi.Count; i++)
+                        for (int i = 0; i < _gorevListesi.Count; i++)
                         {
-                            Console.WriteLine($"{i + 1}. {gorevListesi[i].gorevBaslık}");
+                            Console.WriteLine($"{i + 1}. {_gorevListesi[i].GorevBaslik}");
                         }
                         Console.Write("Hangi görevi güncellemek istiyorsun (numara gir): ");
                         int secilenIndex = int.Parse(Console.ReadLine());
                         int index = secilenIndex - 1;
 
-
-
-
-
-
-
-                    
-                        if (index >= 0 && index < gorevListesi.Count)
+                        if (index >= 0 && index < _gorevListesi.Count)
                         {
-                            gorevListesi[index].Guncelle();
+                            _gorevListesi[index].Guncelle();
                         }
                         else
                         {
@@ -175,13 +152,13 @@ class Program {
                     break;
 
                 case "0":
-                        return;
+                    return;
 
-                    default:
-                        Console.WriteLine("Geçersiz seçim!");
-                        Pause();
-                        break;
-                    }
+                default:
+                    Console.WriteLine("Geçersiz seçim!");
+                    Pause();
+                    break;
+            }
         }
     }
 
