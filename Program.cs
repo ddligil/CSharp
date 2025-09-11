@@ -20,6 +20,7 @@ sb2.Insert(5, " C#");
 // StringBuilder ile yapılan değişiklikleri string tipine çevirmek için ToString() kullanılır.
 
 
+
 // METHOD PARAMETER KEYWORDS(yöntem parametre anahtar kelimeleri):
 //  1. params:Bir metoda değişken sayıda parametre göndermeni sağlar.Metod içinde bu parametreler bir dizi (array) olarak işlenir.
 static void Topla(params int[] sayilar)
