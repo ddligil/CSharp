@@ -301,3 +301,83 @@ ht.Add("id", 42);
 //| Alt Çizgi          | `private static _member` dışında kaçınılmalı         |
 //| Interface          | `I` ile başla (`IShape`)                             |
 
+
+//OOP:
+
+//CONSTRUCTOR yani yapıcı metotlar classlardan obje oluşturulduğu sırada olusan geriye dönüş tipi olmayan metotlardır.Aynı class ismiyle oluşturulur.
+
+
+Araba araba1 = new Araba(); //yazdığında olay şu şekilde gerçekleşiyor:
+	//new Araba() kısmı:Bellekte Araba sınıfından bir nesne oluşturulur.Bu sırada sınıfın constructor’ı (yapıcı metodu) çalıştırılır. Yani public Araba() gibi bir constructor varsa, içindeki kod tetiklenir.
+	//araba1 = ... kısmı:Oluşturulan bu yeni nesnenin referansı (new Araba() sonucu dönen adres) araba1 değişkenine atanır.Böylece artık araba1, o nesneyi işaret eder.Yani özetle:new Araba() → Nesneyi oluşturur ve constructor’u çalıştırır.Araba araba1 = → Oluşturulan nesnenin referansını araba1 değişkenine bağlar.
+
+
+//C#’ta erişim belirleyiciler (access modifiers):bir sınıfın, metodun, alanın veya özelliğin nereden erişilebileceğinibelirler. Yani “bu üyeyi kimler görebilir, kimler kullanabilir” sorusunun cevabını verir.
+Başlıca erişim belirleyiciler şunlardır:
+
+//1. public:Her yerden erişilebilir.Aynı proje içinde veya dışarıdan (başka assembly’den) görülebilir.
+//2. private:Sadece tanımlandığı sınıfın içinden erişilebilir.
+//3. protected:Tanımlandığı sınıf içinde ve ondan türeyen (inherit edilen) alt sınıflarda erişilebilir.
+//4. internal:Aynı assembly/proje içinde erişilebilir.Farklı projelerden (dll/exe) erişilemez.
+
+
+
+//ENCAPSULATION :Bir sınıfın iç detaylarını (alanlar, veriler) dış dünyadan gizleyip, sadece gerekli olan kısımları kontrollü şekilde açmaya denir.
+//Set ıle degerler atanır get ıle alınır
+
+
+//Field (Alan):Bir class içindeki değişkene Field denir.Direkt değeri tutar. Örnek:
+
+class Student
+{
+    public int id;  // field
+}
+
+
+
+//Property (Özellik):Field’ın kontrollü erişim kapısıdır.get → Değeri döndürür.set → Değeri atar.
+//İçine ekstra kurallar/şartlar koyabilirsin.Örnek:
+
+class Student
+{
+    private int id;  // field (gizli)
+
+    public int StudentId   // property
+    {
+        get { return id; }       // okumak için
+        set { if (value > 0)     // yazarken kural
+                 id = value; }
+    }
+}
+
+
+
+//ÖRNEK2:
+class Student
+{
+    private int id;  // field (gizli değişken)
+
+    // Property
+    public int StudentId
+    {
+        get { return id; }       // okumak için
+        set {                   // yazmak için
+            if (value > 0)       // sadece pozitif olursa atansın
+                id = value;
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Student s = new Student();
+
+        s.StudentId = -5;   // kural izin vermez
+        s.StudentId = 10;   //geçerli
+        Console.WriteLine(s.StudentId); // 10
+    }
+}
+
+
