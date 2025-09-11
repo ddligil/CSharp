@@ -424,3 +424,141 @@ class Program
 }
 
 
+
+//Inheritance:Bir sınıfın (base class / parent class) özelliklerini ve metotlarını başka bir sınıfa (derived class / child class) aktarmasıdır.
+class Hayvan
+{
+    public void NefesAl() => Console.WriteLine("Hayvan nefes alıyor.");
+}
+
+class Kedi : Hayvan
+{
+    public void Miyavla() => Console.WriteLine("Miyav!");
+}
+
+class Program
+{
+    static void Main()
+    {
+        Kedi k = new Kedi();
+        k.NefesAl(); // miras aldığı için kullanabilir
+        k.Miyavla(); // kendi metodu
+    }
+}
+
+//operatörü ile miras alınır → class Araba : Arac.
+//Bir sınıf sadece 1 sınıftan miras alabilir (C#’ta çoklu inheritance yoktur).Ama birden fazla interface’ten miras alınabilir.
+//Alt sınıf üst sınıfın:public ve protected üyelerine erişebilir,private üyelerine erişemez.
+//Üst sınıfın constructor’ı, alt sınıfın constructor’ından önce çalışır.
+	
+
+//override:bir alt sınıfın (derived), üst sınıfta (base) tanımlanmış bir metodu kendi ihtiyacına göre yeniden yazmasıdır.
+//Ama override edebilmen için, üst sınıftaki metodun virtual, abstract veya override olması gerekir.
+
+
+
+//Base Class
+
+class Hayvan
+{
+    public virtual void SesCikar()
+    {
+        Console.WriteLine("Bir hayvan ses çıkardı.");
+    }
+}
+//Derived Classes
+
+class Kedi : Hayvan
+{
+    public override void SesCikar()
+    {
+        Console.WriteLine("Miyav!");
+    }
+}
+
+class Kopek : Hayvan
+{
+    public override void SesCikar()
+    {
+        Console.WriteLine("Hav hav!");
+    }
+}
+//Kullanım
+
+class Program
+{
+    static void Main()
+    {
+        Hayvan h1 = new Kedi();
+        Hayvan h2 = new Kopek();
+
+        h1.SesCikar(); // Miyav!
+        h2.SesCikar(); // Hav hav!
+    }
+}
+
+
+
+
+//virtual:Bir metodu alt sınıfta değiştirebilmek için işaretlersin.Yani “bu metodu ister aynen kullan, ister değiştir” demektir.Gövdesi vardır.
+
+
+class Hayvan
+{
+    public virtual void SesCikar()
+    {
+        Console.WriteLine("Hayvan ses çıkardı.");
+    }
+}
+
+class Kedi : Hayvan
+{
+    public override void SesCikar()
+    {
+        Console.WriteLine("Miyav!");
+    }
+}
+//Burada SesCikar() üst sınıfta tanımlı ama Kedi kendi versiyonunu yazıyor.
+
+//abstract:Gövdesiz metot demektir.(Metotların Yapısı şöyledir:
+//Bir metot aslında iki parçadan oluşur:
+//İmza (signature) → Metodun adı, dönüş tipi ve parametreleri.
+//Gövde (body) → { } süslü parantez içindeki çalışan kodlar.
+								  
+//Gövdeli (Normal Metot):Hem imzası vardır hem de içinde çalışan kod vardır.Yani “ne yapacağını ben yazdım” der.
+		public void MerhabaDe()
+		{
+		    Console.WriteLine("Merhaba!"); // <- gövde burası
+		}//Burada metodun ne yapacağı belli → ekrana "Merhaba!" yazdırıyor.
+	 Gövdesiz (Abstract Metot):Sadece imzası vardır ama içinde kod yoktur.Yani “bu metodun nasıl yapılacağını ben değil, alt sınıf yazsın” der.
+
+		 public abstract void SesCikar(); // <- gövde yok
+//Burada metodun adı belli (SesCikar), ama nasıl çalışacağı belirsiz. Alt sınıf bu metodu override ederek doldurmak zorunda.
+//Sadece abstract class içinde tanımlanabilir.
+//Alt sınıflar bu metodu zorunlu olarak override etmek zorundadır.
+//Örnek:
+
+abstract class Hayvan
+{
+    public abstract void SesCikar(); // gövdesiz
+}
+
+class Kedi : Hayvan
+{
+    public override void SesCikar()
+    {
+        Console.WriteLine("Miyav!");
+    }
+}
+
+class Kopek : Hayvan
+{
+    public override void SesCikar()
+    {
+        Console.WriteLine("Hav hav!");
+    }
+}
+Burada Hayvan sınıfının SesCikar metodu zorunlu olarak her alt sınıfta yeniden yazılmak zorunda.
+
+
+
