@@ -322,6 +322,48 @@ Başlıca erişim belirleyiciler şunlardır:
 
 
 
+
+
+//ekstra not:Static constructor nedir?
+//Bir sınıf ilk defa kullanılmaya başlandığında çalışan özel bir metottur.Amaç: static değişkenleri başlatmak.
+//Sadece 1 kez çalışır.Sen çağırmazsın → .NET otomatik çağırır.
+//Parametre alamaz.
+//public/private yazılmaz. (derleyici zaten private kabul eder)
+//Normal constructor gibi nesne için değil, sınıf için çalışır.
+
+class Araba
+{
+    public static int ArabaSayisi;
+
+    // static constructor
+    static Araba()
+    {
+        Console.WriteLine("Static constructor çalıştı!");
+        ArabaSayisi = 0;
+    }
+
+    // normal constructor
+    public Araba()
+    {
+        ArabaSayisi++;
+    }
+}
+
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine(Araba.ArabaSayisi); // static constructor burada tetiklenir
+        Araba a1 = new Araba(); // normal constructor
+        Araba a2 = new Araba(); // normal constructor
+        Console.WriteLine("Toplam araba sayısı: " + Araba.ArabaSayisi);
+    }
+}
+
+//static constructor → sınıf ilk defa kullanıldığında, 1 kere.
+//normal constructor → her new yaptığında, tekrar tekrar.
+
 //ENCAPSULATION :Bir sınıfın iç detaylarını (alanlar, veriler) dış dünyadan gizleyip, sadece gerekli olan kısımları kontrollü şekilde açmaya denir.
 //Set ıle degerler atanır get ıle alınır
 
