@@ -560,5 +560,106 @@ class Kopek : Hayvan
 }
 Burada Hayvan sınıfının SesCikar metodu zorunlu olarak her alt sınıfta yeniden yazılmak zorunda.
 
+	
 
+//Abstract Class Nedir?:Abstract class’tan nesne oluşturamazsın.
+//Amaç: “Benzer şeyleri gruplandırmak, ortak davranışları yazmak, özel kısımları alt sınıflara bırakmak.”
+
+//İçinde abstract metotlar (gövdesiz, sadece adı olan) ve normal metotlar bulunabilir.
+
+// Neden Abstract Class Kullanırız?
+//Alt sınıflara zorunlu görevler yüklemek için.
+//Mesela her hayvan ses çıkarmalıdır (MakeSound()), ama nasıl çıkardığı farklıdır.
+//Ortak davranışları (ör. Eat()) tek yerde toplamak için.Daha düzenli ve kurallı bir yapı kurmak için.
+
+	
+abstract class Animal
+{
+    public abstract void MakeSound(); // Gövdesiz, alt sınıflar yazmak zorunda
+    public void Eat()  // Normal metot
+    {
+        Console.WriteLine("Hayvan yemek yiyor.");
+    }
+}
+
+
+//Abstract class’tan direkt nesne oluşturamazsın:
+// Hata verir:
+
+var a = new Animal(); // olmaz
+
+//Ama ondan türeyen (inherit eden) sınıflar kullanılır:
+class Dog : Animal
+{
+    public override void MakeSound()
+    {
+        Console.WriteLine("Hav hav!");
+    }
+}
+
+class Cat : Animal
+{
+    public override void MakeSound()
+    {
+        Console.WriteLine("Miyav!");
+    }
+}
+
+Animal d = new Dog();
+d.MakeSound(); // "Hav hav!"
+d.Eat();       // "Hayvan yemek yiyor."
+
+
+
+
+
+
+//Interface Nedir:Interface (arayüz), bir sınıfın hangi davranışlara sahip olması gerektiğini tanımlar.
+//İçinde gövdesiz metotlar (imzalar) bulunur.
+//Nesne oluşturulamaz.
+//Interface’i implement eden sınıf, içindeki tüm metotları yazmak zorundadır.
+//Örnek:
+
+interface IFlyable
+{
+    void Fly(); // Gövdesiz, sadece imza
+}
+
+class Bird : IFlyable
+{
+    public void Fly()
+    {
+        Console.WriteLine("Kuş kanat çırparak uçar.");
+    }
+}
+
+class Plane : IFlyable
+{
+    public void Fly()
+    {
+        Console.WriteLine("Uçak motor gücüyle uçar.");
+    }
+}
+
+
+//Burada:Hem Bird hem de Plane, uçabilme özelliği kazanmış oldu.Ama “nasıl uçtukları” farklı.
+
+
+👉 Örnek:
+abstract class Animal
+{
+    public abstract void MakeSound();
+    public void Eat() => Console.WriteLine("Hayvan yemek yiyor.");
+}
+
+interface IFlyable
+{
+    void Fly();
+}
+
+class Bird : Animal, IFlyable
+{
+    public override void MakeSound() => Console.WriteLine("Cik cik!");
+    public void Fly() => Console.WriteLine("Kuş uçuyor!");
+}
 
