@@ -87,7 +87,7 @@ var a;
 a = 9; #çalısmaz
 
 #Ayrıca metot parametrelerinde var kullanılmaz 
-void Display(var param)  // ❌ Geçersiz
+void Display(var param)  //  Geçersiz
 {
     Console.WriteLine(param);
 }
