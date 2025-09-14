@@ -1,0 +1,570 @@
+using System;
+using System.Collections.Generic;
+
+public interface IFunction
+{
+    string Title { get; }
+
+    void Execute();
+}
+
+
+
+
+public class Tasks
+{
+    public string GorevBaslik = "";
+    public string GorevAciklama = "";
+
+    public int GorevDurum;
+
+
+    public int GorevOncelik;
+    public string GorevBaslangic = "";
+    public string GorevBitis = "";
+
+
+    public void TaskOlustur()
+    {
+        Console.Write("Görev Başlığı: ");
+        GorevBaslik = Console.ReadLine();
+
+        Console.Write("Görev Açıklaması: ");
+        GorevAciklama = Console.ReadLine();
+
+
+
+
+        Console.Write("Durum seç (1=Todo, 2=Inprogress, 3=Done): ");
+        GorevDurum = int.Parse(Console.ReadLine());
+
+
+
+
+
+        Console.Write("Öncelik seç (1=Low, 2=Medium, 3=High): ");
+        GorevOncelik = int.Parse(Console.ReadLine());
+
+        GorevBaslangic = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+
+        Console.Write("Bitiş tarihi (gg.aa.yyyy): ");
+        GorevBitis = Console.ReadLine();
+    }
+
+
+    public void Guncelle()
+    {
+        Console.Write("Yeni Başlık (boş geçersen eski kalır): ");
+        string s = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(s)) GorevBaslik = s;
+
+
+
+        Console.Write("Yeni Açıklama (boş geçersen eski kalır): ");
+        s = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(s)) GorevAciklama = s;
+
+        Console.Write("Yeni Durum (1/2/3, boş=eski): ");
+        s = Console.ReadLine();
+
+        if (s == "1" || s == "2" || s == "3") GorevDurum = int.Parse(s);
+
+
+
+
+        Console.Write("Yeni Öncelik (1/2/3, boş=eski): ");
+        s = Console.ReadLine();
+        if (s == "1" || s == "2" || s == "3") GorevOncelik = int.Parse(s);
+
+
+
+
+        Console.Write("Yeni Bitiş Tarihi (boş=eski): ");
+        s = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(s)) GorevBitis = s;
+
+        Console.WriteLine("Görev güncellendi!");
+
+
+
+    }
+}
+
+
+
+public class AppState
+{
+    public List<Tasks> GorevListesi = new List<Tasks>();
+    public bool CikilsinMi = false;
+
+
+}
+
+public class AddTaskFunction : IFunction
+{
+    private AppState _state;
+    public AddTaskFunction(AppState state) { _state = state; }
+    public string Title { get { return "Yeni görev ekle"; } }
+    public void Execute()
+
+
+
+    {
+        var t = new Tasks();
+        t.TaskOlustur();
+        _state.GorevListesi.Add(t);
+        Console.WriteLine("Görev eklendi!");
+        Pause();
+    }
+
+
+
+
+    private static void Pause()
+    {
+        Console.WriteLine("\nDevam için Enter...");
+        Console.ReadLine();
+    }
+
+
+
+}
+
+public class ListTasksFunction : IFunction
+{
+    private AppState _state;
+    public ListTasksFunction(AppState state) { _state = state; }
+    public string Title { get { return "Görevleri listele"; } }
+    public void Execute()
+
+
+
+    {
+        if (_state.GorevListesi.Count == 0)
+        {
+            Console.WriteLine("Hiç görev yok.");
+        }
+
+
+
+        else
+        {
+            for (int i = 0; i < _state.GorevListesi.Count; i++)
+
+            {
+                var g = _state.GorevListesi[i];
+                Console.WriteLine(
+                    (i + 1) + ") " +
+                    "Başlık: " + g.GorevBaslik + ", " +
+                    "Açıklama: " + g.GorevAciklama + ", " +
+                    "Durum: " + g.GorevDurum + ", " +
+                    "Öncelik: " + g.GorevOncelik + ", " +
+                    "Başlangıç: " + g.GorevBaslangic + ", " +
+
+                    "Bitiş: " + g.GorevBitis
+                );
+            }
+        }
+
+
+
+        Pause();
+    }
+
+    private static void Pause()
+    {
+        Console.WriteLine("\nDevam için Enter...");
+        Console.ReadLine();
+
+
+
+
+    }
+}
+
+public class UpdateTaskFunction : IFunction
+{
+    private AppState _state;
+
+    public UpdateTaskFunction(AppState state) { _state = state; }
+    public string Title { get { return "Görev güncelle"; } }
+    public void Execute()
+
+
+
+
+    {
+        if (_state.GorevListesi.Count == 0)
+        {
+            Console.WriteLine("Güncellenecek görev yok.");
+            Pause();
+
+
+            return;
+        }
+
+        for (int i = 0; i < _state.GorevListesi.Count; i++)
+            Console.WriteLine((i + 1) + ". " + _state.GorevListesi[i].GorevBaslik);
+
+        Console.Write("Numara: ");
+
+
+        int secim = int.Parse(Console.ReadLine());
+
+
+        int idx = secim - 1;
+
+        if (idx >= 0 && idx < _state.GorevListesi.Count)
+        {
+            _state.GorevListesi[idx].Guncelle();
+        }
+
+
+        else
+        {
+            Console.WriteLine("Geçersiz seçim!");
+
+        }
+
+
+
+        Pause();
+    }
+
+    private static void Pause()
+    {
+        Console.WriteLine("\nDevam için Enter...");
+        Console.ReadLine();
+
+
+
+    }
+}
+
+public class DeleteTaskFunction : IFunction
+{
+    private AppState _state;
+
+    public DeleteTaskFunction(AppState state) { _state = state; }
+
+
+
+    public string Title { get { return "Görev sil"; } }
+
+    public void Execute()
+
+
+
+    {
+        if (_state.GorevListesi.Count == 0)
+        {
+            Console.WriteLine("Silinecek görev yok.");
+            Pause();
+            return;
+        }
+
+        for (int i = 0; i < _state.GorevListesi.Count; i++)
+            Console.WriteLine((i + 1) + ". " + _state.GorevListesi[i].GorevBaslik);
+
+        Console.Write("Numara: ");
+
+
+        int secim = int.Parse(Console.ReadLine());
+
+        int idx = secim - 1;
+
+
+
+        if (idx >= 0 && idx < _state.GorevListesi.Count)
+        {
+            Console.WriteLine("\"" + _state.GorevListesi[idx].GorevBaslik + "\" silindi.");
+            _state.GorevListesi.RemoveAt(idx);
+        }
+        else
+        {
+            Console.WriteLine("Geçersiz seçim!");
+        }
+        Pause();
+
+    }
+
+
+
+
+
+
+    private static void Pause()
+    {
+        Console.WriteLine("\nDevam için Enter...");
+        Console.ReadLine();
+    }
+}
+
+public class ChangeStatusFunction : IFunction
+{
+    private AppState _state;
+
+
+
+    public ChangeStatusFunction(AppState state) { _state = state; }
+    public string Title { get { return "Durum değiştir"; } }
+    public void Execute()
+    {
+        if (_state.GorevListesi.Count == 0)
+        {
+            Console.WriteLine("Durumu değişecek görev yok.");
+
+
+
+
+            Pause();
+            return;
+        }
+
+        for (int i = 0; i < _state.GorevListesi.Count; i++)
+            Console.WriteLine((i + 1) + ". " + _state.GorevListesi[i].GorevBaslik + " (Durum: " + _state.GorevListesi[i].GorevDurum + ")");
+
+        Console.Write("Numara: ");
+
+
+        int secim = int.Parse(Console.ReadLine());
+        int idx = secim - 1;
+
+        if (idx >= 0 && idx < _state.GorevListesi.Count)
+        {
+            Console.Write("Yeni durum (1=Todo, 2=Inprogress, 3=Done): ");
+            string s = Console.ReadLine();
+            if (s == "1" || s == "2" || s == "3")
+
+
+
+
+            {
+                _state.GorevListesi[idx].GorevDurum = int.Parse(s);
+                Console.WriteLine("Durum güncellendi.");
+            }
+            else
+            {
+                Console.WriteLine("Geçersiz durum!");
+            }
+        }
+        else
+
+        {
+            Console.WriteLine("Geçersiz seçim!");
+        }
+        Pause();
+    }
+
+    private static void Pause()
+    {
+
+
+
+
+        Console.WriteLine("\nDevam için Enter...");
+        Console.ReadLine();
+    }
+}
+
+public class FilterFunction : IFunction
+{
+    private AppState _state;
+    public FilterFunction(AppState state) { _state = state; }
+    public string Title { get { return "Filtrele/Ara"; } }
+    public void Execute()
+    {
+
+
+
+        if (_state.GorevListesi.Count == 0)
+        {
+            Console.WriteLine("Listelenecek görev yok.");
+            Pause();
+            return;
+        }
+
+        Console.WriteLine("1) Durum (1/2/3)");
+        Console.WriteLine("2) Başlık/Açıklama içinde metin ara");
+        Console.WriteLine("3) Öncelik (1/2/3)");
+        Console.Write("Seçim: ");
+
+        string f = Console.ReadLine();
+
+        List<Tasks> sonuc = new List<Tasks>();
+        int i;
+
+        if (f == "1")
+        {
+
+
+            Console.Write("Durum: ");
+            int d = int.Parse(Console.ReadLine());
+            for (i = 0; i < _state.GorevListesi.Count; i++)
+
+
+                if (_state.GorevListesi[i].GorevDurum == d) sonuc.Add(_state.GorevListesi[i]);
+        }
+        else if (f == "2")
+        {
+            Console.Write("Aranacak metin: ");
+            string txt = Console.ReadLine();
+
+            if (txt == null) txt = "";
+            txt = txt.ToLower();
+
+            for (i = 0; i < _state.GorevListesi.Count; i++)
+            {
+
+                var g = _state.GorevListesi[i];
+
+
+
+                string b = (g.GorevBaslik == null ? "" : g.GorevBaslik).ToLower();
+                string a = (g.GorevAciklama == null ? "" : g.GorevAciklama).ToLower();
+                if (b.Contains(txt) || a.Contains(txt)) sonuc.Add(g);
+            }
+        }
+        else if (f == "3")
+        {
+            Console.Write("Öncelik: ");
+            int o = int.Parse(Console.ReadLine());
+            for (i = 0; i < _state.GorevListesi.Count; i++)
+                if (_state.GorevListesi[i].GorevOncelik == o) sonuc.Add(_state.GorevListesi[i]);
+        }
+        else
+        {
+            Console.WriteLine("Geçersiz seçim!");
+            Pause();
+            return;
+        }
+
+        if (sonuc.Count == 0)
+        {
+            Console.WriteLine("Eşleşen görev yok.");
+        }
+        else
+
+
+
+
+
+        {
+            for (i = 0; i < sonuc.Count; i++)
+            {
+                var g = sonuc[i];
+                Console.WriteLine(
+                    "Başlık: " + g.GorevBaslik + ", " +
+                    "Açıklama: " + g.GorevAciklama + ", " +
+                    "Durum: " + g.GorevDurum + ", " +
+                    "Öncelik: " + g.GorevOncelik + ", " +
+                    "Başlangıç: " + g.GorevBaslangic + ", " +
+                    "Bitiş: " + g.GorevBitis
+                );
+            }
+
+
+
+
+
+
+        }
+        Pause();
+    }
+
+    private static void Pause()
+    {
+        Console.WriteLine("\nDevam için Enter...");
+        Console.ReadLine();
+    }
+}
+
+
+
+
+
+
+
+public class ExitFunction : IFunction
+{
+    private AppState _state;
+    public ExitFunction(AppState state) { _state = state; }
+    public string Title { get { return "Çıkış"; } }
+    public void Execute()
+    {
+        _state.CikilsinMi = true;
+    }
+}
+
+public class Program
+{
+    static void Main(string[] args)
+    {
+        var state = new AppState();
+
+        var functions = new List<IFunction>();
+        functions.Add(new AddTaskFunction(state));
+
+
+
+        functions.Add(new ListTasksFunction(state));
+        functions.Add(new UpdateTaskFunction(state));
+        functions.Add(new DeleteTaskFunction(state));
+
+
+
+
+        functions.Add(new ChangeStatusFunction(state));
+        functions.Add(new FilterFunction(state));
+        functions.Add(new ExitFunction(state));
+
+        while (!state.CikilsinMi)
+        {
+            ShowMenu(functions);
+            Console.Write("Seçim yap: ");
+            string secim = Console.ReadLine();
+
+
+
+
+
+
+            if (secim == "1") functions[0].Execute();
+            else if (secim == "2") functions[1].Execute();
+            else if (secim == "3") functions[2].Execute();
+            else if (secim == "4") functions[3].Execute();
+            else if (secim == "5") functions[4].Execute();
+
+
+
+            else if (secim == "6") functions[5].Execute();
+            else if (secim == "0") functions[6].Execute();
+            else
+            {
+                Console.WriteLine("Geçersiz seçim!");
+                Console.WriteLine("\nDevam için Enter...");
+                Console.ReadLine();
+            }
+        }
+    }
+
+
+
+
+
+    static void ShowMenu(List<IFunction> funcs)
+    {
+        Console.Clear();
+        Console.WriteLine("[1] " + funcs[0].Title);
+        Console.WriteLine("[2] " + funcs[1].Title);
+        Console.WriteLine("[3] " + funcs[2].Title);
+        Console.WriteLine("[4] " + funcs[3].Title);
+        Console.WriteLine("[5] " + funcs[4].Title);
+        Console.WriteLine("[6] " + funcs[5].Title);
+        Console.WriteLine("[0] " + funcs[6].Title);
+        Console.WriteLine("----------------------");
+        Console.WriteLine("Görev -> Başlık, Açıklama, Durum, Öncelik, Bitiş Tarihi, Oluşturulma Tarihi");
+        Console.WriteLine("Durumlar -> 1:Todo, 2:Inprogress, 3:Done");
+        Console.WriteLine();
+    }
+}
