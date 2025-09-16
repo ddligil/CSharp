@@ -5,7 +5,8 @@ namespace TodoApp
 {
 
     public interface ITask 
-    //? Bir “görev”in sahip olması gereken özellikler (Başlık, Açıklama, Durum, Öncelik, Başlangıç, Bitiş) ve diğerlerinin temeli olan davranışlar (TaskOlustur, Guncelle) tanımlı.
+    //Bir “görev”in sahip olması gereken özellikler (Başlık, Açıklama, Durum, Öncelik, Başlangıç, Bitiş)
+    //Her görev için ortak olan iki davranış var:(TaskOlustur, Guncelle
   
     {
       // Görev alanları (özellikler) — her implementasyonda bulunmalı
